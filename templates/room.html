@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room 1</title>
+    <link rel="stylesheet" href="/static/css/room.css">
+</head>
+<body>
+    <h1> <span class="top_text"> {{user_name}} is in the commons </span> </h1>
+    <h2> <span class="top_text"> Break a lock from each of the four houses. </span> </h2>
+    <h3> <span class="top_text"> Let some of the paintings guide you. </span> </h3>
+
+    <div class="rectangle"></div>
+    <span class="timer_format"> Seconds Remaining: </span>
+    <span id="timer">{{the_timer}}</span>
+
+    {% if not r_solved %}
+        {% if not r_tried %}
+            <button class="hidden_button_1" onclick="showForm1()"> </button>
+        {% else %}
+            <button class="hidden_button_1" onclick="showForm1()"> 
+                <p class="wrong_ans">Incorrect! Please try again.</p> 
+            </button>
+        {% endif %}
+    {% else %}
+        <button class="hidden_button_1"> 
+            <p class="correct_ans">Correct! Nice job.</p> 
+        </button>
+    {% endif %}
+
+    <div id="pzlForm1" class='clue_box_r' style="display:none">
+        <form action="/ravenclaw" method="POST">
+            <h2>
+                Riddles and puzzles I'm known to solve.
+                <br>
+                All who are clever find me involved.
+                <br>
+                Very smart, I seek only truth,
+                <br>
+                Even the wisest must prove their intelligence.
+                <br>
+                Nothing is random, shown by the first letter traced.
+                <br>
+            </h2>
+            <input type="text" name="ans1">
+            <button type="submit">Submit Answer!</button>
+        </form>
+    </div>
+
+    {% if not h_solved %}
+        {% if not h_tried %}
+            <button class="hidden_button_2" onclick="showForm2()"> </button>
+        {% else %}
+            <button class="hidden_button_2" onclick="showForm2()"> 
+                <p class="wrong_ans">Incorrect! Please try again.</p> 
+            </button>
+        {% endif %}
+    {% else %}
+        <button class="hidden_button_2"> 
+            <p class="correct_ans">Correct! <br> Nice job.</p> 
+        </button>
+    {% endif %}
+
+    <div id="pzlForm2" class='clue_box_h' style="display:none">
+        <form action="/hufflepuff" method="POST">
+            <h2>
+                <span class='hover_letter'>T</span>o every eag<span class='hover_letter'>e</span>r soul, <span class='hover_letter'>a</span> true mo<span class='hover_letter'>m</span>ent of <span class='hover_letter'>w</span>isd<span class='hover_letter'>o</span>m often requi<span class='hover_letter'>r</span>es <span class='hover_letter'>k</span>indness above all.
+                <br>
+                You feel a tug—like the broom wants to show you something. Hover, perhaps?
+                <br>
+                Make sure you start from the beginning!
+                <br>
+            </h2>
+            <input type="text" name="ans2">
+            <button type="submit">Submit Answer!</button>
+        </form>
+    </div>
+
+    {% if not g_solved %}
+        {% if not g_tried %}
+            <button class="hidden_button_3" onclick="showForm3()"> </button>
+        {% else %}
+            <button class="hidden_button_3" onclick="showForm3()"> 
+                <p class="wrong_ans">Incorrect! Please try again.</p> 
+            </button>
+        {% endif %}
+    {% else %}
+        <button class="hidden_button_3"> 
+            <p class="correct_ans">Correct! <br> Nice job.</p> 
+        </button>
+    {% endif %}
+
+    <div id="pzlForm3" class='clue_box_g' style="display:none">
+        <form action="/gryffindor" method="POST">
+            <h2>
+                The flame reveals the path.
+                <br>
+                Begin with the first letter, and leap forward by the number of candles in this room.
+                <br>
+                Your starting word is BAEYRVR—the end should have the same amount of letters.
+            </h2>
+            <input type="text" name="ans3">
+            <button type="submit">Submit Answer!</button>
+        </form>
+    </div>
+
+    {% if not s_solved %}
+        {% if not s_tried %}
+            <button class="hidden_button_4" onclick="showForm4()"> </button>
+        {% else %}
+            <button class="hidden_button_4" onclick="showForm4()"> 
+                <p class="wrong_ans">Incorrect! Please try again.</p> 
+            </button>
+        {% endif %}
+    {% else %}
+        <button class="hidden_button_4"> 
+            <p class="correct_ans">Correct! <br> Nice job.</p> 
+        </button>
+    {% endif %}
+
+    <div id="pzlForm4" class='clue_box_s' style="display:none">
+        <form action="/slytherin" method="POST">
+            <h2>
+                To craft the brew of cunning might,
+                <br>
+                Add each with care, and out of sight.
+                <br>
+                Stir in two crushed mandrake leaves,
+                <br>
+                To root your will beneath the eaves.
+                <br>
+                Mix six pinches of moonstone dust,
+                <br>
+                For hidden trusts and earned distrust.
+                <br>
+                Add five drops of basilisks's saliva,
+                <br>
+                For venom sharp as a sly survivor.
+                <br>
+                Not too much, nor overdone—
+                <br>
+                Perfection lies in what they sum.
+                <br>
+            </h2>
+            <input type="text" name="ans4">
+            <button type="submit">Submit Answer!</button>
+        </form>
+    </div>
+
+    {% if r_solved and h_solved and g_solved and s_solved %}
+        <p class="message_format"> the lion silently approves </p>
+        <a href="/secret_passage" class="link_format">Go to Secret Passage</a>
+    {% endif %}
+
+    <script src = "/static/js/room.js"></script>
+
+    <script>
+        let timer = parseInt(document.getElementById('timer').innerText);
+        let t = document.getElementById('timer');
+
+        let countdown = setInterval(() => {
+            timer -= 1;
+            t.innerText = timer;
+            if (timer <= 0) {
+                clearInterval(countdown);
+                window.location.href = '/failed_escape';
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
